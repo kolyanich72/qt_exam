@@ -19,7 +19,8 @@
 """
 
 from PySide6 import QtWidgets
-from  ui.ui_ev_filtr import  Ui_Form
+from ui.ui_ev_filtr import Ui_Form
+
 
 class Window(QtWidgets.QWidget):
 
