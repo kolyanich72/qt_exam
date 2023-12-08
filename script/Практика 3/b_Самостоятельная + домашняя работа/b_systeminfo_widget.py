@@ -71,8 +71,6 @@ class Intest_window(QtWidgets.QWidget):
             self._thread.start()
 
 
-
-
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
     window = Intest_window()
