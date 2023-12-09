@@ -46,9 +46,10 @@ class Complex_window(QtWidgets.QWidget):
         self.line_ram_log.appendPlainText(str(data[1]))
 
     def _delay_time_changed(self):
-        self.WeatherHandler.setDelay(self.delay_inpt_spinBox.value())
+        new_value = int(self.delay_inpt_spinBox.value())
+        self.WeatherHandler.setDelay(new_value)
+        self._thread.setDelay(new_value)
 
-        self._thread.delay = self.line_inpt_spinBox.value()
 
         if self._thread.isRunning() == False:
             self._thread.start()

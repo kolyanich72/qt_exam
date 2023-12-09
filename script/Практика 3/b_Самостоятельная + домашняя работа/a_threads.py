@@ -22,11 +22,16 @@ class SystemInfo(QtCore.QThread):
         self.start()
         # создайте атрибут класса self.delay = None, для управлением задержкой получения данных
 
+    def setDelay(self, delay) -> None:
+        self.delay = delay
+        print(self.delay, "  from set")
+
     def run(self) -> None:  # TODO переопределить метод run
 
         if self.delay is None:  # Если задержка не передана в поток перед его запуском
             self.delay = 1  # то устанавливайте значение 1
             self.status = False
+
 
         while self.status:  # Запустите бесконечный цикл получения информации о системе
 
@@ -37,9 +42,11 @@ class SystemInfo(QtCore.QThread):
             data.append(ram_value)
             print(data)
             self.systemSignal.emit(data)  # с помощью метода .emit передайте в виде списка данные о загрузке CPU и RAM
+            print(self.status, " ", self.delay, "  from run")
             time.sleep(self.delay)  # с помощью функции .sleep() приостановите выполнение цикла на время self.delay
             if self.delay == 0:
                 self.status = False
+
 
 
 class WeatherHandler(QtCore.QThread):
@@ -63,18 +70,17 @@ class WeatherHandler(QtCore.QThread):
 
         self.__delay = delay
 
+
     def run(self) -> None:
         #  настройте метод для корректной работы
         if self.__delay == 0:  # если устанавливаем задержку > 0 то цикл будет работать
             self.__status = False
-
         else:
             self.__status = True
 
         while self.__status:
 
             response = requests.get(self.__api_url)
-
             data = (response.json())
             self.signalWeatherInfo.emit(data)
             time.sleep(self.__delay)
