@@ -21,6 +21,7 @@ class Complex_window(QtWidgets.QWidget):
 
         self.lat = 36.826903
         self.lon = 10.173742
+        self.WeatherHandler = a_threads.WeatherHandler(self.lat, self.lon)
 
         self.initUI_weather()
         self.initUI_system()
@@ -46,9 +47,9 @@ class Complex_window(QtWidgets.QWidget):
         self.line_ram_log.appendPlainText(str(data[1]))
 
     def _delay_time_changed(self):
-        new_value = int(self.delay_inpt_spinBox.value())
-        self.WeatherHandler.setDelay(new_value)
-        self._thread.setDelay(new_value)
+        new_delay_value = self.delay_inpt_spinBox.value()
+        self.WeatherHandler.setDelay(new_delay_value)
+        self._thread.setDelay(new_delay_value)
 
 
         if self._thread.isRunning() == False:
@@ -119,7 +120,6 @@ class Complex_window(QtWidgets.QWidget):
             self.push_but.setText("Do it")
 
     def initUI_weather(self):
-        self.WeatherHandler = a_threads.WeatherHandler(self.lat, self.lon)
 
         labelH_lay = QtWidgets.QHBoxLayout()
         coordH_lay = QtWidgets.QHBoxLayout()

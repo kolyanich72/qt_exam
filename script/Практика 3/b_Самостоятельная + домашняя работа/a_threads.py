@@ -32,7 +32,6 @@ class SystemInfo(QtCore.QThread):
             self.delay = 1  # то устанавливайте значение 1
             self.status = False
 
-
         while self.status:  # Запустите бесконечный цикл получения информации о системе
 
             cpu_value = psutil.cpu_percent()  # с помощью вызова функции cpu_percent() в пакете psutil получите загрузку CPU
@@ -40,13 +39,10 @@ class SystemInfo(QtCore.QThread):
             data = []
             data.append(cpu_value)
             data.append(ram_value)
-            print(data)
             self.systemSignal.emit(data)  # с помощью метода .emit передайте в виде списка данные о загрузке CPU и RAM
-            print(self.status, " ", self.delay, "  from run")
             time.sleep(self.delay)  # с помощью функции .sleep() приостановите выполнение цикла на время self.delay
             if self.delay == 0:
                 self.status = False
-
 
 
 class WeatherHandler(QtCore.QThread):
@@ -69,7 +65,6 @@ class WeatherHandler(QtCore.QThread):
         """
 
         self.__delay = delay
-
 
     def run(self) -> None:
         #  настройте метод для корректной работы
